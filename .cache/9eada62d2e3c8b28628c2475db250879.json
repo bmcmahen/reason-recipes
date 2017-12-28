@@ -1,0 +1,1 @@
+{"dependencies":[{"name":"./lib/React","loc":{"line":3,"column":25}}],"generated":{"js":"'use strict';\n\nmodule.exports = require('./lib/React');\n"},"hash":"8f1d37331662e03cdae3f455c3393809"}
