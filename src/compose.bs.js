@@ -14,12 +14,8 @@ var component = ReasonReact.reducerComponent("Compose");
 function make(fb, uid, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function (param) {
-      var reduce = param[/* reduce */1];
       var id = Curry._1(BaseUtils$ReactTemplate.uuid, /* () */0);
       return ReasonReact.element(/* None */0, /* None */0, EditRecipe$ReactTemplate.make(+(param[/* state */2] === /* Saving */0), Models$ReactTemplate.Recipe[/* blank */1](id, uid), (function (recipe) {
-                        Curry._1(reduce, (function () {
-                                return /* Saving */0;
-                              }));
                         var FB = Firebase$ReactTemplate.Collection([Models$ReactTemplate.Recipe[0]]);
                         var collection = Curry._1(FB[/* get */0], fb);
                         var doc = collection.doc(recipe.id);

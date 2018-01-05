@@ -6,7 +6,7 @@ let className = css([Display(Flex), Color(Red)]);
 
 let component = ReasonReact.statelessComponent("Navbar");
 
-let make = (~user, ~auth, ~fb, _children) => {
+let make = (~user, ~auth, ~router, ~fb, _children) => {
   /** Password login */
   let onClick = (_event) =>
     Firebase.Auth.signInWithEmailAndPassword(auth, "ben.mcmahen@gmail.com", "awesomepassword")
@@ -23,6 +23,7 @@ let make = (~user, ~auth, ~fb, _children) => {
          }
        )
     |> ignore;
+  let compose = (_event) => DirectorRe.setRoute(router, "/compose");
   let signOut = (_event) => Firebase.Auth.signOut(auth) |> ignore;
   /** Google login with Firebase */
   let loginWithGoogle = (_event) => {
@@ -59,7 +60,11 @@ let make = (~user, ~auth, ~fb, _children) => {
       <div className="Navbar">
         (
           switch user {
-          | Some(_session) => <Button onClick=signOut> ...(str("Sign out")) </Button>
+          | Some(_session) =>
+            <div>
+              <Button onClick=signOut> ...(str("Sign out")) </Button>
+              <Button onClick=compose> ...(str("Compose")) </Button>
+            </div>
           | None =>
             <div>
               <Button onClick=loginWithGoogle>

@@ -9,48 +9,118 @@ var Js_primitive         = require("bs-platform/lib/js/js_primitive.js");
 var Navbar$ReactTemplate = require("./navbar.bs.js");
 var Director             = require("director/build/director");
 
-var component = ReasonReact.reducerComponent("App");
+var component = ReasonReact.statelessComponent("LoggedIn");
 
-function make(auth, fb, _) {
+function make(_, _$1, _$2, route, _$3, _$4) {
   var newrecord = component.slice();
+  newrecord[/* render */9] = (function () {
+      if (route !== 0) {
+        return React.createElement("div", undefined, " new recipe");
+      } else {
+        return React.createElement("div", undefined, "all recipes");
+      }
+    });
+  return newrecord;
+}
+
+var LoggedIn = /* module */[
+  /* component */component,
+  /* make */make
+];
+
+var component$1 = ReasonReact.statelessComponent("InitRouter");
+
+function make$1(router, children) {
+  var newrecord = component$1.slice();
+  newrecord[/* render */9] = (function () {
+      if (router) {
+        return children;
+      } else {
+        return null;
+      }
+    });
+  return newrecord;
+}
+
+var InitRouter = /* module */[
+  /* component */component$1,
+  /* make */make$1
+];
+
+var component$2 = ReasonReact.reducerComponent("App");
+
+function make$2(auth, fb, _) {
+  var newrecord = component$2.slice();
   newrecord[/* didMount */4] = (function (param) {
+      var state = param[/* state */2];
       var reduce = param[/* reduce */1];
       var router = new Director.Router({
             "/": Curry._1(reduce, (function () {
                     return /* ShowAllRecipes */0;
+                  })),
+            "/compose": Curry._1(reduce, (function () {
+                    return /* AddNewRecipe */1;
                   }))
           });
       router.init("/");
       auth.onAuthStateChanged(Curry._1(reduce, (function (user) {
                   return /* AuthStateChanged */[(user == null) ? /* None */0 : [user]];
                 })));
-      return /* NoUpdate */0;
+      return /* Update */Block.__(0, [/* record */[
+                  /* showing */state[/* showing */0],
+                  /* user */state[/* user */1],
+                  /* router : Some */[router]
+                ]]);
     });
   newrecord[/* render */9] = (function (self) {
-      return React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, Navbar$ReactTemplate.make(self[/* state */2][/* user */1], auth, fb, /* array */[])), React.createElement("div", undefined, "hello world"));
+      var match = self[/* state */2][/* router */2];
+      var match$1 = self[/* state */2][/* user */1];
+      if (match) {
+        var router = match[0];
+        if (match$1) {
+          return React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, Navbar$ReactTemplate.make(self[/* state */2][/* user */1], auth, router, fb, /* array */[])), ReasonReact.element(/* None */0, /* None */0, make(auth, match$1[0], router, self[/* state */2][/* showing */0], fb, /* array */[])));
+        } else {
+          return React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, Navbar$ReactTemplate.make(self[/* state */2][/* user */1], auth, router, fb, /* array */[])));
+        }
+      } else {
+        return React.createElement("div", undefined, "initializing router");
+      }
     });
   newrecord[/* initialState */10] = (function () {
       return /* record */[
               /* showing : AllRecipes */0,
-              /* user */Js_primitive.null_undefined_to_opt(auth.currentUser)
+              /* user */Js_primitive.null_undefined_to_opt(auth.currentUser),
+              /* router : None */0
             ];
     });
   newrecord[/* reducer */12] = (function (action, state) {
-      if (action) {
-        return /* Update */Block.__(0, [/* record */[
-                    /* showing */state[/* showing */0],
-                    /* user */action[0]
-                  ]]);
+      if (typeof action === "number") {
+        if (action !== 0) {
+          return /* Update */Block.__(0, [/* record */[
+                      /* showing : NewRecipe */1,
+                      /* user */state[/* user */1],
+                      /* router */state[/* router */2]
+                    ]]);
+        } else {
+          return /* Update */Block.__(0, [/* record */[
+                      /* showing : AllRecipes */0,
+                      /* user */state[/* user */1],
+                      /* router */state[/* router */2]
+                    ]]);
+        }
       } else {
         return /* Update */Block.__(0, [/* record */[
-                    /* showing : AllRecipes */0,
-                    /* user */state[/* user */1]
+                    /* showing */state[/* showing */0],
+                    /* user */action[0],
+                    /* router */state[/* router */2]
                   ]]);
       }
     });
   return newrecord;
 }
 
-exports.component = component;
-exports.make      = make;
+exports.LoggedIn   = LoggedIn;
+exports.InitRouter = InitRouter;
+exports.component  = component$2;
+exports.make       = make$2;
 /* component Not a pure module */

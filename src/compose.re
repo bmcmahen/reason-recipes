@@ -8,14 +8,14 @@ let make = (~fb, ~uid, _children) => {
   ...component,
   initialState: () => Editing,
   reducer: (action, _) => ReasonReact.Update(action),
-  render: ({state, reduce}) => {
+  render: ({state}) => {
     let id = BaseUtils.uuid();
     <EditRecipe
       saving=(state === Saving)
       recipe=(Models.Recipe.blank(id, uid))
       onSave=(
         (recipe) => {
-          reduce((_) => Saving);
+          /* reduce((_) => Saving); */
           module FB = Firebase.Collection(Models.Recipe);
           let collection = FB.get(fb);
           let doc = Firebase.doc(collection, recipe##id);

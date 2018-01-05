@@ -19,7 +19,7 @@ var className = Nice$ReactTemplate.css(/* :: */[
 
 var component = ReasonReact.statelessComponent("Navbar");
 
-function make(user, auth, _, _$1) {
+function make(user, auth, router, _, _$1) {
   var onClick = function () {
     auth.signInWithEmailAndPassword("ben.mcmahen@gmail.com", "awesomepassword").then((function (user) {
               console.log(user);
@@ -28,6 +28,10 @@ function make(user, auth, _, _$1) {
             console.log(err);
             return Promise.resolve(/* () */0);
           }));
+    return /* () */0;
+  };
+  var compose = function () {
+    router.setRoute("/compose");
     return /* () */0;
   };
   var signOut = function () {
@@ -58,7 +62,7 @@ function make(user, auth, _, _$1) {
   newrecord[/* render */9] = (function () {
       return React.createElement("div", {
                   className: "Navbar"
-                }, user ? ReasonReact.element(/* None */0, /* None */0, Button$ReactTemplate.make(signOut, Util$ReactTemplate.str("Sign out"))) : React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, Button$ReactTemplate.make(loginWithGoogle, "Login with Google")), React.createElement("button", {
+                }, user ? React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, Button$ReactTemplate.make(signOut, Util$ReactTemplate.str("Sign out"))), ReasonReact.element(/* None */0, /* None */0, Button$ReactTemplate.make(compose, Util$ReactTemplate.str("Compose")))) : React.createElement("div", undefined, ReasonReact.element(/* None */0, /* None */0, Button$ReactTemplate.make(loginWithGoogle, "Login with Google")), React.createElement("button", {
                             onClick: onClick
                           }, "Login with email")));
     });
